@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Dictionary App</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <div class="navbar-brand mx-auto" style="font-size: 2rem;">
+            <img src="../static/book.png" alt="" srcset="" style="height: 4rem; width: 4rem">
+            Dictionary</div>
+        </div>
+      </nav>
+    
+    <div class="container mt-5">
+      <form action="{{ url_for('index') }}" method="post">
+        <div class="input-group mb-3 mx-auto" style="width: 70%;">
+          <input type="text" class="form-control" placeholder="Search Word" name="searchBox" aria-label="Recipient's username" aria-describedby="button-addon2" autocomplete="off">
+          <button class="btn btn-outline-primary search-btn" type="submit" id="button-addon2">Search</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- spinner -->
+    <div class="container spinner-container hidden" style="text-align: center;">
+      <button class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Searching...
+      </button>
+    </div>
+    <!-- Word -->
+    <div class="container mt-5 word" style="text-align: left;">
+      <h3>{{ word }}</h3>
+    </div>
+    {% if error %}
+    <div class="container mx-auto alert alert-warning d-flex align-items-center" role="alert" style="width: 50%">
+      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+      <div>
+       {{ message }}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if not error %}
+    <!-- Meanings -->
+    <div class="container meaning-container">
+      <ol>
+      {% for i in range(meanings | length) %}
+        <li>
+          {% for j in range(meanings[i]["meanings"] | length) %}
+          <div class="parts-of-speech mb-2" style="color: grey; font-style: italic;">
+            {{ meanings[i]["meanings"][j]["partOfSpeech"] }}
+          </div> 
+          <div class="definitions">
+            {% for k in range(meanings[i]["meanings"][j]["definitions"] | length ) %}
+              <ul>
+                <li style="list-style: none; line-height: 0.5rem;">
+                  {{ meanings[i]["meanings"][j]["definitions"][k]["definition"] }}
+                </li>
+              </ul>
+              <br>
+            {% endfor %}
+          </div>
+            {% if (meanings[i]["meanings"][j]["synonyms"] | length) > 0 %}
+              <div class="container synonyms mb-3">
+                <span style="color: #188038">Similar: </span>
+                {% for k in range(meanings[i]["meanings"][j]["synonyms"] | length ) %}
+                <span class="similar-words" style="border: 1px solid #dadce0; border-radius: 15px; padding: 0 12px; padding-bottom: 4px;">{{ meanings[i]["meanings"][j]["synonyms"][k] }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if (meanings[i]["meanings"][j]["antonyms"] | length ) > 0 %}
+            <div class="container antonyms mb-3">
+              <span style="color: #d93025">Opposite: </span>
+              {% for k in range(meanings[i]["meanings"][j]["antonyms"] | length ) %}
+              <span class="opposite-words" style="border: 1px solid #dadce0; border-radius: 15px; padding: 0 12px; padding-bottom: 4px;">{{ meanings[i]["meanings"][j]["antonyms"][k] }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+    {% endif %}
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+  <script src="../static/app.js"></script>
+</html>

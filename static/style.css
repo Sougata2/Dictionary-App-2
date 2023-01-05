@@ -1,0 +1,9 @@
+.hidden{
+    display: none;
+}
+.similar-words:hover{
+    background-color: #dadce0;
+}
+.opposite-words:hover{
+    background-color: #dadce0;
+}

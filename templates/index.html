@@ -41,7 +41,7 @@
       <h3>{{ word }}</h3>
     </div>
     {% if error %}
-    <div class="container mx-auto alert alert-warning d-flex align-items-center" role="alert" style="width: 50%">
+    <div class="container mx-auto alert alert-warning d-flex align-items-center" role="alert">
       <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
       <div>
        {{ message }}
@@ -62,7 +62,7 @@
           <div class="definitions">
             {% for k in range(meanings[i]["meanings"][j]["definitions"] | length ) %}
               <ul>
-                <li style="list-style: none; line-height: 0.5rem;">
+                <li style="list-style: none; margin-bottom: 10px;">
                   {{ meanings[i]["meanings"][j]["definitions"][k]["definition"] }}
                 </li>
               </ul>
@@ -73,7 +73,7 @@
               <div class="container synonyms mb-3">
                 <span style="color: #188038">Similar: </span>
                 {% for k in range(meanings[i]["meanings"][j]["synonyms"] | length ) %}
-                <span class="similar-words" style="border: 1px solid #dadce0; border-radius: 15px; padding: 0 12px; padding-bottom: 4px;">{{ meanings[i]["meanings"][j]["synonyms"][k] }}</span>
+                <button class="similar-words btn btn-outline-light" style="border: 1px solid #dadce0; border-radius: 20px; color: black; margin: 5px 0; font-size: 15px;">{{ meanings[i]["meanings"][j]["synonyms"][k] }}</button>
                 {% endfor %}
               </div>
             {% endif %}
@@ -81,7 +81,7 @@
             <div class="container antonyms mb-3">
               <span style="color: #d93025">Opposite: </span>
               {% for k in range(meanings[i]["meanings"][j]["antonyms"] | length ) %}
-              <span class="opposite-words" style="border: 1px solid #dadce0; border-radius: 15px; padding: 0 12px; padding-bottom: 4px;">{{ meanings[i]["meanings"][j]["antonyms"][k] }}</span>
+              <button class="opposite-words btn btn-outline-light" style="border: 1px solid #dadce0; border-radius: 20px; color:black; margin: 5px 0; font-size: 15px;">{{ meanings[i]["meanings"][j]["antonyms"][k] }}</button>
               {% endfor %}
             </div>
             {% endif %}
